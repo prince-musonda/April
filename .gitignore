@@ -2,3 +2,5 @@ __pycache__
 .venv
 games
 jarviss_ui.py
+tts.py
+.gitignore
