@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>R.I.O. Core - Autonomous</title>
+    <title>R.I.O. Core - Full Emotive Suite</title>
     <style>
       :root {
         --glow: #00d9ff;
@@ -22,43 +22,25 @@
         overflow: hidden;
         font-family: "Courier New", Courier, monospace;
         color: var(--glow);
-        transition: background 0.5s ease;
+        transition: all 0.5s ease;
       }
 
-      /* --- INITIALIZATION SCREEN --- */
       #boot-screen {
         position: fixed;
         inset: 0;
         background: #000;
         z-index: 999;
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        letter-spacing: 2px;
       }
 
-      .pulse-text {
-        animation: text-pulse 1.5s infinite;
-      }
-
-      @keyframes text-pulse {
-        0%,
-        100% {
-          opacity: 0.3;
-        }
-        50% {
-          opacity: 1;
-        }
-      }
-
-      /* --- EYE CONTAINER --- */
       .eye-container {
         display: flex;
         gap: 60px;
+        align-items: center;
         position: relative;
-        /* Constant organic drifting */
         animation: drift 10s ease-in-out infinite;
       }
 
@@ -73,26 +55,48 @@
         transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       }
 
-      /* Sparkle for Wink */
       #sparkle {
         position: absolute;
-        top: -20px;
+        top: -40px;
         right: -20px;
-        font-size: 30px;
+        font-size: 40px;
         color: #ffd700;
         display: none;
-        text-shadow: 0 0 10px gold;
+        text-shadow: 0 0 15px gold;
       }
 
-      /* --- MODE STYLES --- */
+      /* --- NEW MODES --- */
 
+      /* 1. Confusion: Asymmetric tilt */
+      .confusion .eye-l {
+        transform: rotate(-5deg);
+      }
+      .confusion .eye-r {
+        transform: rotate(15deg) translateY(-15px);
+      }
+
+      /* 2. Amusement: Happy squint (curved bottom) */
+      .amusement .eye {
+        border-radius: 50% 50% 40% 40%;
+        transform: scale(1.1);
+        height: 90px;
+      }
+
+      /* 3. Concern: Inner corners high (worried) */
+      .concern .eye-l {
+        transform: rotate(15deg);
+      }
+      .concern .eye-r {
+        transform: rotate(-15deg);
+      }
+
+      /* --- EXISTING MODES --- */
       .evil {
         --glow: #ff3333;
       }
       .evil .eye {
-        height: 60px;
         border-radius: 10% 10% 50% 50% / 20% 20% 80% 80%;
-        transform: translateY(20px);
+        transform: translateY(10px);
       }
 
       .curious .eye-l {
@@ -106,173 +110,203 @@
         height: 10px;
         border-radius: 5px;
         opacity: 0.6;
-        box-shadow: 0 0 10px var(--glow);
       }
 
       .wink .eye-l {
         border-radius: 50%;
-        height: var(--eye-w);
-        width: var(--eye-w);
+        height: 150px;
+        width: 150px;
       }
       .wink .eye-r {
-        height: 20px;
+        height: 12px;
+        border-radius: 6px;
+        transform: translateY(30px);
+      }
+      /* 1. Judgment: One eye squinting */
+      .judgment .eye-r {
+        transform: scaleY(0.3) translateY(30px);
         border-radius: 5px;
-        /* Adjust this value: higher number = lower position */
-        transform: translateY(60px);
       }
 
-      /* Judge - Flat top, squinting */
-      .judgy .eye {
-        height: 60px;
-        border-radius: 10% 10% 50% 50% / 20% 20% 80% 80%;
-        transform: translateY(20px);
-      }
-
-      /* Wondering - Tilted and slightly narrowed */
-      .wondering .eye-t {
-        transform: rotate(-10deg) translateY(-10px) scaleY(0.9);
-      }
-
-      /* Surprise - Round and large */
-      .surprise .eye {
+      /* 2. Excitement: Round and pulsing */
+      .excitement .eye {
         border-radius: 50%;
-        height: 150px;
-        transform: scale(1.1);
+        height: 140px;
+        width: 140px;
+        animation: jitter 0.2s infinite;
+        box-shadow: 0 0 60px var(--glow);
       }
 
-      /* --- SYSTEM ANIMATIONS --- */
+      /* 3. Boredom: Heavy lids */
+      .boredom .eye {
+        height: 40px;
+        border-radius: 10% 10% 50% 50% / 20% 20% 80% 80%;
+        opacity: 0.7;
+      }
 
+      /* 4. Processing: Rapid scanning animation */
+      .processing .eye {
+        height: 60px;
+        animation: fast-scan 0.5s infinite alternate ease-in-out;
+      }
+
+      /* 5. Rage: Red and vibrating */
+      .rage {
+        --glow: #ff0000;
+      }
+      .rage .eye {
+        border-radius: 0% 100% 50% 50% / 0% 100% 50% 50%;
+        animation: jitter 0.1s infinite;
+      }
+
+      /* Animations */
+      @keyframes jitter {
+        0% {
+          transform: translate(1px, 1px);
+        }
+        50% {
+          transform: translate(-1px, -1px);
+        }
+        100% {
+          transform: translate(1px, -1px);
+        }
+      }
+
+      @keyframes fast-scan {
+        from {
+          transform: translateX(-40px);
+        }
+        to {
+          transform: translateX(40px);
+        }
+      }
       @keyframes drift {
         0%,
         100% {
           transform: translate(0, 0);
         }
-        25% {
+        50% {
           transform: translate(10px, -5px);
-        }
-        75% {
-          transform: translate(-10px, 5px);
         }
       }
 
       .blink {
         height: 2px !important;
         transform: scaleY(0) !important;
-        box-shadow: none !important;
       }
     </style>
   </head>
   <body class="default">
     <div id="boot-screen" onclick="initializeRio()">
-      <div class="pulse-text">[ INITIALIZE R.I.O. SYSTEM ]</div>
-      <div style="font-size: 10px; margin-top: 10px; opacity: 0.5">
-        CLICK TO ENTER FULLSCREEN
-      </div>
+      <div>[CLICK HERE TO INITIALIZE R.I.O. SYSTEM ]</div>
     </div>
 
-    <div class="eye-container" id="rio-core">
+    <div class="eye-container">
       <div id="sparkle">✦</div>
-      <div class="eye eye-l" id="l"></div>
-      <div class="eye eye-r" id="r"></div>
+      <div class="eye eye-l"></div>
+      <div class="eye eye-r"></div>
     </div>
 
     <script>
       const body = document.body;
       const sparkle = document.getElementById("sparkle");
-      let autoCycleInterval;
 
-      // 1. INITIALIZATION & FULLSCREEN
       function initializeRio() {
-        // Request Fullscreen
-        const doc = document.documentElement;
-        if (doc.requestFullscreen) doc.requestFullscreen();
-        else if (doc.webkitRequestFullscreen) doc.webkitRequestFullscreen();
-
-        // Hide boot screen and start autonomous behavior
+        document.documentElement.requestFullscreen().catch(() => {});
         document.getElementById("boot-screen").style.display = "none";
-
         startAutonomousCycle();
         startBlinking();
       }
 
-      // 2. INDIVIDUAL MODE FUNCTIONS (Call these anytime)
-
+      /* --- MODE FUNCTIONS --- */
       function modeDefault() {
         body.className = "default";
         sparkle.style.display = "none";
       }
-
       function modeEvil() {
         body.className = "evil";
         sparkle.style.display = "none";
       }
-
       function modeCurious() {
         body.className = "curious";
         sparkle.style.display = "none";
       }
-
       function modeSleeping() {
         body.className = "sleeping";
         sparkle.style.display = "none";
       }
-
-      function modeJudgy() {
-        body.className = "judgy";
-        sparkle.style.display = "none";
-      }
-
-      function modeWonder() {
-        body.className = "wondering";
-        sparkle.style.display = "none";
-      }
-
-      function modeSurprise() {
-        body.className = "surprise";
-        sparkle.style.display = "none";
-      }
-
       function modeWink() {
         body.className = "wink";
         sparkle.style.display = "block";
       }
+      function modeConfusion() {
+        body.className = "confusion";
+        sparkle.style.display = "none";
+      }
+      function modeAmusement() {
+        body.className = "amusement";
+        sparkle.style.display = "none";
+      }
+      function modeConcern() {
+        body.className = "concern";
+        sparkle.style.display = "none";
+      }
+      function modeJudgment() {
+        body.className = "judgment";
+        sparkle.style.display = "none";
+      }
+      function modeExcitement() {
+        body.className = "excitement";
+        sparkle.style.display = "none";
+      }
+      function modeBoredom() {
+        body.className = "boredom";
+        sparkle.style.display = "none";
+      }
+      function modeProcessing() {
+        body.className = "processing";
+        sparkle.style.display = "none";
+      }
+      function modeRage() {
+        body.className = "rage";
+        sparkle.style.display = "none";
+      }
 
-      // 3. AUTONOMOUS BEHAVIOR
       function startAutonomousCycle() {
         const modes = [
           modeDefault,
           modeCurious,
-          modeEvil,
-          modeDefault,
+          modeConfusion,
+          modeJudgment,
+          modeExcitement,
+          modeBoredom,
+          modeProcessing,
+          modeAmusement,
+          modeConcern,
+          modeRage,
           modeWink,
           modeSleeping,
-          modeWonder,
-          modeJudgy,
-          modeSurprise,
+          modeEvil,
         ];
-        let index = 0;
 
-        autoCycleInterval = setInterval(() => {
+        let index = 0;
+        setInterval(() => {
           modes[index]();
           index = (index + 1) % modes.length;
-        }, 5000); // Switches every 5 seconds
+        }, 4000);
       }
 
       function startBlinking() {
-        setInterval(
-          () => {
-            // Don't blink if sleeping
-            if (body.className.includes("sleeping")) return;
-
-            const eyes = document.querySelectorAll(".eye");
-            eyes.forEach((e) => e.classList.add("blink"));
-
-            setTimeout(() => {
-              eyes.forEach((e) => e.classList.remove("blink"));
-            }, 150);
-          },
-          Math.random() * 4000 + 2000,
-        );
+        setInterval(() => {
+          if (body.className === "sleeping" || body.className === "wink")
+            return;
+          const eyes = document.querySelectorAll(".eye");
+          eyes.forEach((e) => e.classList.add("blink"));
+          setTimeout(
+            () => eyes.forEach((e) => e.classList.remove("blink")),
+            150,
+          );
+        }, 3500);
       }
     </script>
   </body>

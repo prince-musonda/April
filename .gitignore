@@ -4,3 +4,4 @@ games
 jarviss_ui.py
 tts.py
 .gitignore
+/memory_and_soul

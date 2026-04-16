@@ -1,5 +1,4 @@
 import threading
-import pygame
 from typing import IO
 from io import BytesIO
 from elevenlabs import VoiceSettings
