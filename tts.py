@@ -6,7 +6,7 @@ from elevenlabs import VoiceSettings
 from elevenlabs.client import ElevenLabs
 
 
-ELEVENLABS_API_KEY = "sk_965df61fe13545ac10d7e49c7d9d0883bd0f302a23cc57dd"
+ELEVENLABS_API_KEY = "ADD API"
 elevenlabs = ElevenLabs(
     api_key=ELEVENLABS_API_KEY,
 )
